@@ -13,10 +13,11 @@ The steps to run the program are as follows
 - Run "make"
 - enter "./my-dining" followed by a number
 
-In order to prevent deadlocks, we chose to implement a strategy that involves a resource hierarchy. Instead of using a global lock, we chose to lock each mutex/semaphore individually.
-We also wanted to make sure that we do not run into any circular waits, which in the context of the philosopher problem is when all the philosophers pick their left fork
-simultaneously. To do this, we enforced a rule that the first n-1 philosophers pick up there left fork first, while the last one chooses his right fork first, then the left.
-This guarantees that at least one philosopher will always be able to acquire both forks, complete their critical section (eating), and release the resources for others, fully preventing system deadlock.
+Deadlock Prevention
+For the coarse-grained solution, we use a single Tournament-Tree lock to control access to the eating section, allowing only one philosopher to eat at a time.
+For the fine-grained solution, we use one Peterson lock per chopstick. Each philosopher must acquire both adjacent chopsticks before eating.
+To prevent deadlock, we use a resource hierarchy strategy. Every philosopher acquires the chopstick with the smaller ID first, followed by the chopstick with the larger ID. The locks are released in reverse order.
+This consistent ordering prevents circular waiting, eliminating the possibility of deadlock caused by philosophers waiting on one another's chopsticks.
 
 Assumptions
 -in the event there is not a number specified when executing the code, then the code is not supposed to run
