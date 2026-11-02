@@ -19,4 +19,8 @@ simultaneously. To do this, we enforced a rule that the first n-1 philosophers p
 This guarantees that at least one philosopher will always be able to acquire both forks, complete their critical section (eating), and release the resources for others, fully preventing system deadlock.
 
 Assumptions
--in the event there is not number specified when executing the code, the default is that there are 5 philosophers
+-in the event there is not a number specified when executing the code, then the code is not supposed to run
+-The program needs at least 2 philosophers
+Limitations
+- Since the tournament tree is represented with a binary tree, then the implementation calculates the next power of two that is greater than or equal to n.
+  If n is not a power of two, the tree allocates memory for unused dummy leaf nodes and locks to maintain the tree's structure. THis does not effect the functionality of the code.
